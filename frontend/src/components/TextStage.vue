@@ -25,6 +25,50 @@
     props: {
       show: Boolean
     },
+    watch: {
+      show(newVal, oldVal) {
+        if(newVal === false){
+          console.log(newVal)
+          let $this = this
+          document.onkeydown = function (e) {
+            let key = e.keyCode;
+            if (key === 38 && $this.currentPage < $this.totalPage) {
+              $this.currentPage++;
+              $this.handleCurrentChange($this.currentPage)
+            } else if (key === 38 && $this.currentPage === $this.totalPage) {
+              $this.$message({
+                message: '页数上限',
+                type: 'error'
+              });
+            } else if (key === 40 && $this.currentPage > 1) {
+              $this.currentPage--;
+              $this.handleCurrentChange($this.currentPage)
+            } else if (key === 40 && $this.currentPage === 1) {
+              $this.$message({
+                message: '页数下限',
+                type: 'error'
+              });
+            } else if (key === 39 && $this.tempId < $this.relations.length - 1) {
+              $this.$store.commit('setTempId', $this.tempId + 1)
+            } else if (key === 39 && $this.tempId === $this.relations.length - 1) {
+              $this.$message({
+                message: '条数上限',
+                type: 'error'
+              });
+            } else if (key === 37 && $this.tempId > 0) {
+              $this.$store.commit('setTempId', $this.tempId - 1)
+            } else if (key === 37 && $this.tempId === 0) {
+              $this.$message({
+                message: '条数下限',
+                type: 'error'
+              });
+            }
+          }
+        } else {
+          document.onkeydown = null
+        }
+      }
+    },
     computed: {
       text: function () {
         return this.$store.getters.getText
@@ -56,43 +100,6 @@
       },
       tempId: function () {
         return this.$store.getters.getTempId
-      }
-    },
-    mounted() {
-      let $this = this
-      document.onkeydown = function (e) {
-        let key = e.keyCode;
-        if (key === 38 && $this.currentPage < $this.totalPage) {
-          $this.currentPage++;
-          $this.handleCurrentChange($this.currentPage)
-        } else if (key === 38 && $this.currentPage === $this.totalPage) {
-          $this.$message({
-            message: '页数上限',
-            type: 'error'
-          });
-        } else if (key === 40 && $this.currentPage > 1) {
-          $this.currentPage--;
-          $this.handleCurrentChange($this.currentPage)
-        } else if (key === 40 && $this.currentPage === 1) {
-          $this.$message({
-            message: '页数下限',
-            type: 'error'
-          });
-        } else if (key === 39 && $this.tempId < $this.relations.length - 1) {
-          $this.$store.commit('setTempId', $this.tempId + 1)
-        } else if (key === 39 && $this.tempId === $this.relations.length - 1) {
-          $this.$message({
-            message: '条数上限',
-            type: 'error'
-          });
-        } else if (key === 37 && $this.tempId > 0) {
-          $this.$store.commit('setTempId', $this.tempId - 1)
-        } else if (key === 37 && $this.tempId === 0) {
-          $this.$message({
-            message: '条数下限',
-            type: 'error'
-          });
-        }
       }
     },
     data() {
