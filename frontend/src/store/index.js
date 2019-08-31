@@ -18,80 +18,80 @@ const store = new Vuex.Store({
     tempTags: []
   },
   getters: {
-    getPen(state) {
+    getPen (state) {
       return state.pen
     },
-    getText(state) {
+    getText (state) {
       return state.text
     },
-    getTags(state) {
+    getTags (state) {
       return state.tags
     },
-    getRelations(state) {
+    getRelations (state) {
       return state.relations
     },
-    getTempId(state) {
+    getTempId (state) {
       return state.tempId
     },
-    getTempTags(state) {
+    getTempTags (state) {
       return state.tempTags
     },
-    getTagObject(state) {
+    getTagObject (state) {
       return state.tagObject
     },
-    getNum(state) {
+    getNum (state) {
       return state.num
     },
-    getTotalPage(state) {
+    getTotalPage (state) {
       return state.totalPage
     },
-    getEnt1(state) {
+    getEnt1 (state) {
       return state.ent1
     },
-    getEnt2(state) {
+    getEnt2 (state) {
       return state.ent2
     }
   },
   mutations: {
-    setPen(state) {
+    setPen (state) {
       state.pen = true
     },
-    unsetPen(state) {
+    unsetPen (state) {
       state.pen = false
     },
-    setText(state, text) {
+    setText (state, text) {
       state.text = text
     },
-    setTags(state, tags) {
+    setTags (state, tags) {
       state.tags = tags
     },
-    setTagObject(state, tag) {
+    setTagObject (state, tag) {
       state.tagObject = tag
     },
-    setRelations(state, relations) {
+    setRelations (state, relations) {
       state.relations = relations
     },
-    setTempId(state, id) {
+    setTempId (state, id) {
       state.tempId = id
     },
-    setTempTags(state, tags) {
+    setTempTags (state, tags) {
       state.tempTags = tags
     },
-    setNum(state, num) {
+    setNum (state, num) {
       state.num = num
     },
-    setTotalPage(state, page) {
+    setTotalPage (state, page) {
       state.totalPage = page
     },
-    setEnt1(state, ent1) {
+    setEnt1 (state, ent1) {
       state.ent1 = ent1
     },
-    setEnt2(state, ent2) {
+    setEnt2 (state, ent2) {
       state.ent2 = ent2
     }
   },
   actions: {
-    setPageNum(context, params) {
+    setPageNum (context, params) {
       params.$this.$store.commit('setNum', params.num)
       params.$this.$axios.get(params.$this.URL.getTags,
         {
@@ -111,7 +111,7 @@ const store = new Vuex.Store({
         .catch(error => {
           console.log(error)
         })
-    },
+    }
   }
 })
 

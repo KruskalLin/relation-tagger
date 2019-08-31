@@ -3,6 +3,6 @@ const URL = {
   getTags: BASEURL + 'getTags',
   getTagsNum: BASEURL + 'getTagsNum',
   saveTags: BASEURL + 'saveTags',
-  exportFile: BASEURL + 'export',
+  exportFile: BASEURL + 'export'
 }
 export default URL

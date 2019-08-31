@@ -20,123 +20,123 @@
 </template>
 
 <script>
-  export default {
-    name: 'TextStage',
-    props: {
-      show: Boolean
-    },
-    watch: {
-      show(newVal, oldVal) {
-        if(newVal === false){
-          console.log(newVal)
-          let $this = this
-          document.onkeydown = function (e) {
-            let key = e.keyCode;
-            if (key === 38 && $this.currentPage < $this.totalPage) {
-              $this.currentPage++;
-              $this.handleCurrentChange($this.currentPage)
-            } else if (key === 38 && $this.currentPage === $this.totalPage) {
-              $this.$message({
-                message: '页数上限',
-                type: 'error'
-              });
-            } else if (key === 40 && $this.currentPage > 1) {
-              $this.currentPage--;
-              $this.handleCurrentChange($this.currentPage)
-            } else if (key === 40 && $this.currentPage === 1) {
-              $this.$message({
-                message: '页数下限',
-                type: 'error'
-              });
-            } else if (key === 39 && $this.tempId < $this.relations.length - 1) {
-              $this.$store.commit('setTempId', $this.tempId + 1)
-            } else if (key === 39 && $this.tempId === $this.relations.length - 1) {
-              $this.$message({
-                message: '条数上限',
-                type: 'error'
-              });
-            } else if (key === 37 && $this.tempId > 0) {
-              $this.$store.commit('setTempId', $this.tempId - 1)
-            } else if (key === 37 && $this.tempId === 0) {
-              $this.$message({
-                message: '条数下限',
-                type: 'error'
-              });
-            }
+export default {
+  name: 'TextStage',
+  props: {
+    show: Boolean
+  },
+  watch: {
+    show (newVal, oldVal) {
+      if (newVal === false) {
+        console.log(newVal)
+        let $this = this
+        document.onkeydown = function (e) {
+          let key = e.keyCode
+          if (key === 38 && $this.currentPage < $this.totalPage) {
+            $this.currentPage++
+            $this.handleCurrentChange($this.currentPage)
+          } else if (key === 38 && $this.currentPage === $this.totalPage) {
+            $this.$message({
+              message: '页数上限',
+              type: 'error'
+            })
+          } else if (key === 40 && $this.currentPage > 1) {
+            $this.currentPage--
+            $this.handleCurrentChange($this.currentPage)
+          } else if (key === 40 && $this.currentPage === 1) {
+            $this.$message({
+              message: '页数下限',
+              type: 'error'
+            })
+          } else if (key === 39 && $this.tempId < $this.relations.length - 1) {
+            $this.$store.commit('setTempId', $this.tempId + 1)
+          } else if (key === 39 && $this.tempId === $this.relations.length - 1) {
+            $this.$message({
+              message: '条数上限',
+              type: 'error'
+            })
+          } else if (key === 37 && $this.tempId > 0) {
+            $this.$store.commit('setTempId', $this.tempId - 1)
+          } else if (key === 37 && $this.tempId === 0) {
+            $this.$message({
+              message: '条数下限',
+              type: 'error'
+            })
           }
-        } else {
-          document.onkeydown = null
         }
-      }
-    },
-    computed: {
-      text: function () {
-        return this.$store.getters.getText
-      },
-      tags: function () {
-        return this.$store.getters.getTags
-      },
-      totalPage: function () {
-        return this.$store.getters.getTotalPage
-      },
-      showText: function () {
-        let tags = this.tags
-        let text = this.text
-        let tempHtml = ''
-        console.log(tempHtml)
-        let lastend = 0
-        for (let i = 0; i < tags.length; i++) {
-          let start = tags[i].start
-          let end = tags[i].end
-          tempHtml += text.substring(lastend, start)
-          tempHtml += '<span class="annotation" id="' + i + '">' + text.substring(start, end) + '</span>'
-          lastend = end
-        }
-        tempHtml += text.substring(lastend)
-        return tempHtml
-      },
-      relations: function () {
-        return this.$store.getters.getRelations
-      },
-      tempId: function () {
-        return this.$store.getters.getTempId
-      }
-    },
-    data() {
-      return {
-        disable: false,
-        id: 0,
-        hoverText: '',
-        currentPage: 1
-      }
-    },
-    methods: {
-      over: function (event) {
-        if (event.target.nodeName === 'SPAN') {
-          this.disable = false
-          this.id = parseInt(event.target.id)
-          this.hoverText = event.target.innerHTML
-          return
-        }
-        this.disable = true
-      },
-      deleteTags() {
-        let tags = this.$store.getters.getTags
-        tags.splice(this.id, 1)
-        this.$store.commit('setTags', tags)
-        this.$store.commit('setTempTags', tags)
-      },
-      entity1() {
-        this.$store.commit('setEnt1', this.hoverText)
-      },
-      entity2() {
-        this.$store.commit('setEnt2', this.hoverText)
-      },
-      handleCurrentChange(val) {
-        this.$store.dispatch('setPageNum', {$this: this, num: val})
+      } else {
+        document.onkeydown = null
       }
     }
+  },
+  computed: {
+    text: function () {
+      return this.$store.getters.getText
+    },
+    tags: function () {
+      return this.$store.getters.getTags
+    },
+    totalPage: function () {
+      return this.$store.getters.getTotalPage
+    },
+    showText: function () {
+      let tags = this.tags
+      let text = this.text
+      let tempHtml = ''
+      console.log(tempHtml)
+      let lastend = 0
+      for (let i = 0; i < tags.length; i++) {
+        let start = tags[i].start
+        let end = tags[i].end
+        tempHtml += text.substring(lastend, start)
+        tempHtml += '<span class="annotation" id="' + i + '">' + text.substring(start, end) + '</span>'
+        lastend = end
+      }
+      tempHtml += text.substring(lastend)
+      return tempHtml
+    },
+    relations: function () {
+      return this.$store.getters.getRelations
+    },
+    tempId: function () {
+      return this.$store.getters.getTempId
+    }
+  },
+  data () {
+    return {
+      disable: false,
+      id: 0,
+      hoverText: '',
+      currentPage: 1
+    }
+  },
+  methods: {
+    over: function (event) {
+      if (event.target.nodeName === 'SPAN') {
+        this.disable = false
+        this.id = parseInt(event.target.id)
+        this.hoverText = event.target.innerHTML
+        return
+      }
+      this.disable = true
+    },
+    deleteTags () {
+      let tags = this.$store.getters.getTags
+      tags.splice(this.id, 1)
+      this.$store.commit('setTags', tags)
+      this.$store.commit('setTempTags', tags)
+    },
+    entity1 () {
+      this.$store.commit('setEnt1', this.hoverText)
+    },
+    entity2 () {
+      this.$store.commit('setEnt2', this.hoverText)
+    },
+    handleCurrentChange (val) {
+      this.$store.dispatch('setPageNum', {$this: this, num: val})
+    }
   }
+}
 </script>
 
 <style scoped>

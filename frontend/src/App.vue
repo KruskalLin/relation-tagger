@@ -19,7 +19,7 @@ export default {
   mounted () {
     this.fetchNum()
   },
-  data() {
+  data () {
     return {
       show: true
     }
@@ -29,13 +29,13 @@ export default {
       return this.$axios.get(this.URL.getTagsNum)
         .then(res => {
           this.$store.commit('setTotalPage', res.data.num)
-          this.$store.dispatch('setPageNum',{ $this: this, num: 1 })
+          this.$store.dispatch('setPageNum', { $this: this, num: 1 })
         })
         .catch(error => {
           console.log(error)
         })
     },
-    expert() {
+    expert () {
       this.show = !this.show
     }
   }
