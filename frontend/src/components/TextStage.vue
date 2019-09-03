@@ -22,9 +22,6 @@
 <script>
 export default {
   name: 'TextStage',
-  props: {
-    show: Boolean
-  },
   watch: {
     show (newVal, oldVal) {
       if (newVal === false) {
@@ -100,6 +97,9 @@ export default {
     },
     tempId: function () {
       return this.$store.getters.getTempId
+    },
+    show: function () {
+      return this.$store.getters.getShow
     }
   },
   data () {

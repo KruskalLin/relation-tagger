@@ -15,7 +15,8 @@ const store = new Vuex.Store({
     ent1: '',
     ent2: '',
     tempId: 0,
-    tempTags: []
+    tempTags: [],
+    show: true
   },
   getters: {
     getPen (state) {
@@ -50,6 +51,9 @@ const store = new Vuex.Store({
     },
     getEnt2 (state) {
       return state.ent2
+    },
+    getShow (state) {
+      return state.show
     }
   },
   mutations: {
@@ -88,6 +92,9 @@ const store = new Vuex.Store({
     },
     setEnt2 (state, ent2) {
       state.ent2 = ent2
+    },
+    setShow (state, show) {
+      state.show = show
     }
   },
   actions: {
