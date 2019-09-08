@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <el-button size="small" type="primary" @click="expert">Expert</el-button>
-    <TextStage :show="show"/>
-    <TagsStage :show="show"/>
+    <TextStage/>
+    <TagsStage/>
   </div>
 </template>
 
@@ -19,11 +19,6 @@ export default {
   mounted () {
     this.fetchNum()
   },
-  data () {
-    return {
-      show: true
-    }
-  },
   methods: {
     async fetchNum () {
       return this.$axios.get(this.URL.getTagsNum)
@@ -36,7 +31,7 @@ export default {
         })
     },
     expert () {
-      this.show = !this.show
+      this.$store.commit('setShow', !this.$store.getters.getShow)
     }
   }
 }

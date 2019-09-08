@@ -1,4 +1,4 @@
-const BASEURL = 'http://localhost:5000/'
+const BASEURL = 'http://193.112.82.110:5000/'
 const URL = {
   getTags: BASEURL + 'getTags',
   getTagsNum: BASEURL + 'getTagsNum',

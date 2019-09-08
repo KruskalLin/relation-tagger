@@ -1,5 +1,6 @@
 <template xmlns:v-contextmenu="http://www.w3.org/1999/xhtml">
   <div class="text-stage">
+    <div v-show="!show" style="margin: 20px 20px 20px 0; font-weight: bold">expert piece: {{ tempId + 1 }} / {{ relations.length }}</div>
     <div class="sdc-article-body">
       <v-contextmenu ref="contextmenu">
         <v-contextmenu-item :disabled="disable" @click="entity1">entity1</v-contextmenu-item>
@@ -9,7 +10,6 @@
       <p v-html="showText" @contextmenu.prevent="over($event)" v-contextmenu:contextmenu></p>
     </div>
     <el-pagination
-      v-show="show"
       @current-change="handleCurrentChange"
       :current-page.sync="currentPage"
       :page-size="1"
@@ -22,9 +22,6 @@
 <script>
 export default {
   name: 'TextStage',
-  props: {
-    show: Boolean
-  },
   watch: {
     show (newVal, oldVal) {
       if (newVal === false) {
@@ -100,6 +97,9 @@ export default {
     },
     tempId: function () {
       return this.$store.getters.getTempId
+    },
+    show: function () {
+      return this.$store.getters.getShow
     }
   },
   data () {

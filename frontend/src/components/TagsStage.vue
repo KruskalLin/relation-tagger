@@ -75,9 +75,6 @@ import FileSaver from 'file-saver'
 
 export default {
   name: 'TagsStage',
-  props: {
-    show: Boolean
-  },
   computed: {
     relations: function () {
       return this.$store.getters.getRelations
@@ -99,6 +96,9 @@ export default {
     },
     id: function () {
       return this.$store.getters.getTempId
+    },
+    show: function () {
+      return this.$store.getters.getShow
     }
   },
   watch: {
