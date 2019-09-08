@@ -30,7 +30,7 @@ export default {
       if (newVal === false) {
         console.log(newVal)
         let $this = this
-        document.onkeydown = function (e) {
+        document.onkeydown = async function (e) {
           let key = e.keyCode
           if (key === 38 && $this.currentPage < $this.totalPage) {
             $this.currentPage++
@@ -134,6 +134,25 @@ export default {
     },
     handleCurrentChange (val) {
       this.$store.dispatch('setPageNum', {$this: this, num: val})
+    },
+    handleShow ($this) {
+      if ($this.show === true) {
+        let temp = $this.$store.getters.getTempTags
+        $this.$store.commit('setTags', temp)
+      } else {
+        let temp = []
+        let text1 = $this.relations[$this.tempId].em1Text
+        let text2 = $this.relations[$this.tempId].em2Text
+        for (let i of $this.tags) {
+          if (i['text'] === text1) {
+            temp.push(i)
+          }
+          if (i['text'] === text2) {
+            temp.push(i)
+          }
+        }
+        $this.$store.commit('setTags', temp)
+      }
     }
   }
 }

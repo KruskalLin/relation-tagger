@@ -73,6 +73,20 @@ const store = new Vuex.Store({
     },
     setTempId (state, id) {
       state.tempId = id
+      if (state.show === false) {
+        let temp = []
+        let text1 = state.relations[state.tempId].em1Text
+        let text2 = state.relations[state.tempId].em2Text
+        for (let i of state.tempTags) {
+          if (i['text'] === text1) {
+            temp.push(i)
+          }
+          if (i['text'] === text2) {
+            temp.push(i)
+          }
+        }
+        state.tags = temp
+      }
     },
     setTempTags (state, tags) {
       state.tempTags = tags
@@ -107,6 +121,20 @@ const store = new Vuex.Store({
           context.commit('setTempTags', tag['entityMentions'])
           context.commit('setRelations', tag['relationMentions'])
           context.commit('setTempId', 0)
+          if (context.state.show === false) {
+            let temp = []
+            let text1 = context.state.relations[context.state.tempId].em1Text
+            let text2 = context.state.relations[context.state.tempId].em2Text
+            for (let i of context.state.tempTags) {
+              if (i['text'] === text1) {
+                temp.push(i)
+              }
+              if (i['text'] === text2) {
+                temp.push(i)
+              }
+            }
+            context.commit('setTags', temp)
+          }
         })
         .catch(error => {
           console.log(error)
