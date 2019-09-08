@@ -10,13 +10,22 @@ for line in lines:
     k = json.loads(line)
     text = k['sentText']
     texts = set()
+    start_end = []
     temp = []
     for i in k['entityMentions']:
         if i['text'] not in texts:
-            texts.add(i['text'])
             pos = text.find(i['text'])
             i['start'] = pos
+            for j in start_end:
+                if j[0] <= pos <= j[1]:
+                    pos = text.find(i['text'], j[1])
+                    i['start'] = pos
+            if pos == -1:
+                continue
             i['end'] = pos + len(i['text'])
+            start_end.extend([(i['start'], i['end'])])
+            start_end.sort(key=lambda x: x[1])
+            texts.add(i['text'])
             temp.extend([i])
     k['entityMentions'] = temp
     lines_replica.extend([json.dumps(k)])
